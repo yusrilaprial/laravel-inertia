@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\PagesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +16,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return redirect('/home');
 });
+
+Route::get('/home', [PagesController::class, 'index']);
+Route::get('/about', [PagesController::class, 'about']);
+
+Route::get('/users', [UserController::class, 'index'])->name('user.index');
+Route::get('/register', [UserController::class, 'create']);
+Route::post('/user', [UserController::class, 'store']);
+Route::get('/user/{user}', [UserController::class, 'show']);
+Route::get('/user/{id}/edit', [UserController::class, 'edit']);
+Route::delete('/user/{id}', [UserController::class, 'destroy']);
