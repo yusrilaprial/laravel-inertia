@@ -52,32 +52,25 @@ class UserController extends Controller
 
         return to_route('user.index')->with(['status' => 'success', 'message' => 'User created successfully.']);
     }
-    public function edit()
+    public function edit(User $user)
     {
         $title = 'Edit User';
-        return Inertia::render('User/Register', ['title' => $title]);
+        return Inertia::render('User/Edit', [
+            'title' => $title,
+            'user' => $user
+        ]);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, User $user)
     {
         $request->validate([
             'name' => 'required|string|max:50',
             'email' => 'required|email|max:50',
-            'password' => 'required|min:6',
-            'valid_password' => 'required|min:6|same:password',
         ]);
 
-        // User::create([
-        //     'name' => $request->name,
-        //     'email' => $request->email,
-        //     'password' => Hash::make($request->password)
-        // ]);
+        $user->update($request->all());
 
-        $post = $request->all();
-        $post['password'] = Hash::make($request->password);
-        User::create($post);
-
-        return to_route('user.index')->with(['status' => 'success', 'message' => 'User created successfully.']);
+        return to_route('user.index')->with(['status' => 'success', 'message' => 'Update created successfully.']);
     }
 
     public function destroy($id)

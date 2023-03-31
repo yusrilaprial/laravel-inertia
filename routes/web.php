@@ -24,8 +24,12 @@ Route::get('/home', [PagesController::class, 'index']);
 Route::get('/about', [PagesController::class, 'about']);
 
 Route::get('/users', [UserController::class, 'index'])->name('user.index');
+
 Route::get('/register', [UserController::class, 'create']);
 Route::post('/user', [UserController::class, 'store']);
 Route::get('/user/{user}', [UserController::class, 'show']);
-Route::get('/user/{id}/edit', [UserController::class, 'edit']);
+
+Route::get('/user/{user}/edit', [UserController::class, 'edit']);
+Route::put('/user/{user}', [UserController::class, 'update']);
+
 Route::delete('/user/{id}', [UserController::class, 'destroy']);
